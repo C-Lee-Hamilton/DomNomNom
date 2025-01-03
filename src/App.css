@@ -1,0 +1,103 @@
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: "Courier New", Courier, monospace;
+  background-color: #1c1c1c; /* Dark background */
+  color: #e6e6e6; /* Light gray text */
+  display: block; /* Revert back to block layout */
+  padding: 0;
+  height: 100vh; /* Ensure the full height is taken up */
+  overflow: hidden; /* Prevent scrolling */
+}
+
+/* Container */
+.app-container {
+  text-align: center;
+  padding: 0px;
+  display: block; /* Revert to block for standard flow */
+  margin: 0 auto; /* This will center the content horizontally */
+  width: 100%;
+  max-width: 900px; /* Optional: Restrict width */
+  height: 100%; /* Ensure the container fills the screen height */
+  display: flex;
+  flex-direction: column; /* Ensure items stack vertically */
+  justify-content: center; /* Centers items vertically in the container */
+}
+
+/* Header */
+header h1 {
+  font-size: 3rem;
+  color: #c71585; /* Red-purple */
+  text-shadow: 2px 2px 6px #000; /* Black shadow for depth */
+  margin: 5px 0 10px 0;
+}
+
+/* Button */
+.feed-button {
+  background-color: #c71585; /* Deep red */
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid #333;
+}
+
+.feed-button:hover {
+  box-shadow: 0 4px 8px #333;
+}
+
+.feed-button:active {
+  transform: scale(0.99);
+}
+/* Grid Container */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  justify-content: center;
+  max-width: 900px;
+  margin: 30px auto;
+}
+
+/* Grid Box */
+.grid-box {
+  background-color: #333; /* Dark gray */
+  border: 2px solid #c71585; /* Red-purple border */
+  border-radius: 10px;
+  padding: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  transition: transform 0.2s;
+}
+
+.grid-box:hover {
+  transform: scale(1.05);
+}
+
+/* Interactive Elements */
+.grid-element {
+  font-size: 1rem;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 90%;
+  max-width: 200px;
+}
+
+.grid-element:focus {
+  outline: 2px solid #8b0000; /* Deep red focus */
+}
+
+/* Labels */
+.grid-box label {
+  font-size: 0.9rem;
+  margin-left: 5px;
+  color: #e6e6e6; /* Light gray */
+}
