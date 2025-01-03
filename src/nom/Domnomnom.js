@@ -59,10 +59,10 @@ export const Domnomnom = (mode) => {
     }
     console.log(j);
 
-    for (let i = elements.length; i >= j; i--) {
+    for (let k = elements.length - 1; k >= j; k--) {
       setTimeout(() => {
         destroy();
-      }, 200 * (elements.length - 1 - i));
+      }, 200 * (elements.length - 1 - k));
     }
 
     console.log("done");
