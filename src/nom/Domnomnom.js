@@ -38,38 +38,34 @@ export const Domnomnom = (mode) => {
   const massDestroy = () => {
     const elements = document.querySelectorAll("*");
 
-    for (let i = elements.length - 1; i > 0; i--) {
+    let j = 0;
+
+    for (let i = 0; i < elements.length - 1; i++) {
+      const typetest = elements[i].nodeName;
+      const exemptStatus = elements[i].getAttribute("title");
+      switch (typetest) {
+        case "SCRIPT":
+        case "HTML":
+        case "HEAD":
+        case "STYLE":
+        case "TITLE":
+        case "META":
+        case "BODY":
+          j++;
+      }
+      if (exemptStatus === "exempt") {
+        j++;
+      }
+    }
+    console.log(j);
+
+    for (let i = elements.length; i >= j; i--) {
       setTimeout(() => {
-        const exemptStatus = elements[i].getAttribute("title");
-        const typetest = elements[i].nodeName;
-        const valid = () => {
-          switch (typetest) {
-            case "SCRIPT":
-            case "HTML":
-            case "HEAD":
-            case "STYLE":
-            case "TITLE":
-            case "META":
-            case "BODY":
-              return false;
-          }
-
-          if (exemptStatus === "exempt") {
-            return false;
-          }
-          return true;
-        };
-        const isValid = valid();
-
-        if (isValid) {
-          elements[i].remove();
-        } else {
-          console.log("xforce");
-        }
+        destroy();
       }, 200 * (elements.length - 1 - i));
     }
 
-    console.log(elements);
+    console.log("done");
   };
 
   //where what to do is chosen
