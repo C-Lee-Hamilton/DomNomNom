@@ -2,6 +2,7 @@ import { Domnomnom } from "./nom/Domnomnom";
 import "./App.css";
 
 function App() {
+  //Domnomnom has 2 modes, "clicker" and "auto"
   const consume = Domnomnom("clicker");
   const massConsume = Domnomnom("auto");
   return (

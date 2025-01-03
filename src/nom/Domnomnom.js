@@ -1,4 +1,6 @@
 export const Domnomnom = (mode) => {
+  //function if mode=clicker
+  //destroys one random element without children
   const destroy = () => {
     const elements = document.querySelectorAll("*");
     const randomselect = Math.floor(Math.random() * elements.length);
@@ -30,6 +32,9 @@ export const Domnomnom = (mode) => {
     selectedElement.remove();
   };
 
+  //function if mode=auto
+  //auto destroy elements from the bottom up
+  //currently just deletes everything and ignores exemptions
   const massDestroy = () => {
     const elements = document.querySelectorAll("*");
 
@@ -67,6 +72,7 @@ export const Domnomnom = (mode) => {
     console.log(elements);
   };
 
+  //where what to do is chosen
   if (mode === "clicker") {
     return destroy;
   } else return massDestroy;
