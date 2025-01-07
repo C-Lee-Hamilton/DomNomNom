@@ -1,17 +1,42 @@
 export const Domnomnom = (mode) => {
-  //function if mode=clicker
-  //destroys one random element without children
   const destroy = () => {
-    const elements = document.querySelectorAll("*");
+    const elementsList = document.querySelectorAll("*");
+    const elements = Array.from(elementsList);
     const randomselect = Math.floor(Math.random() * elements.length);
     if (!elements[randomselect]) {
-      return;
+      return false;
     }
+
+    //scan for number of exemptions
+    var i = 0;
+    for (let k = 0; k <= elements.length - 1; k++) {
+      const testElement = elements[k];
+      const typecount = testElement.nodeName;
+      switch (typecount) {
+        case "SCRIPT":
+        case "HTML":
+        case "HEAD":
+        case "STYLE":
+        case "TITLE":
+        case "META":
+          i++;
+      }
+      if (testElement.getAttribute("title") === "exempt") {
+        i++;
+      }
+    }
+    //
+    //end if all eligible elements destroyed
+    if (elements.length <= i) {
+      console.log("end of list");
+      return true;
+    }
+    //
 
     const selectedElement = elements[randomselect];
     const exemptStatus = selectedElement.getAttribute("title");
     if (exemptStatus === "exempt") {
-      return;
+      return false;
     }
 
     const typetest = selectedElement.nodeName;
@@ -22,54 +47,29 @@ export const Domnomnom = (mode) => {
       case "STYLE":
       case "TITLE":
       case "META":
-        return;
+        return false;
     }
 
     if (selectedElement.childElementCount > 0) {
-      return;
+      return false;
     }
 
     selectedElement.remove();
+
+    if (mode === "clicker") {
+      return true;
+    } else return false;
   };
 
-  //function if mode=auto
-  //auto destroy elements from the bottom up
-  //currently just deletes everything and ignores exemptions
-  const massDestroy = () => {
-    const elements = document.querySelectorAll("*");
-
-    let j = 0;
-
-    for (let i = 0; i < elements.length - 1; i++) {
-      const typetest = elements[i].nodeName;
-      const exemptStatus = elements[i].getAttribute("title");
-      switch (typetest) {
-        case "SCRIPT":
-        case "HTML":
-        case "HEAD":
-        case "STYLE":
-        case "TITLE":
-        case "META":
-        case "BODY":
-          j++;
+  const destroyOne = () => {
+    const intervalId = setInterval(() => {
+      const success = destroy();
+      if (success) {
+        clearInterval(intervalId);
+        console.log("success");
       }
-      if (exemptStatus === "exempt") {
-        j++;
-      }
-    }
-    console.log(j);
-
-    for (let k = elements.length - 1; k >= j; k--) {
-      setTimeout(() => {
-        destroy();
-      }, 200 * (elements.length - 1 - k));
-    }
-
-    console.log("done");
+    }, 100);
   };
 
-  //where what to do is chosen
-  if (mode === "clicker") {
-    return destroy;
-  } else return massDestroy;
+  return destroyOne;
 };
