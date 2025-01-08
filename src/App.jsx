@@ -6,8 +6,8 @@ function App() {
   const consume = Domnomnom("clicker");
   const massConsume = Domnomnom("auto");
   return (
-    <div title="exempt" className="app-container">
-      <header>
+    <div className="app-container">
+      <header title="exempt">
         <h1 title="exempt">DomNomNom</h1>
       </header>
       <button title="exempt" className="feed-button" onClick={consume}>

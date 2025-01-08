@@ -26,6 +26,10 @@ export const Domnomnom = (mode) => {
       if (testElement.getAttribute("title") === "exempt") {
         return false;
       }
+
+      if (testElement.getAttribute("id") === "root") {
+        return false;
+      }
       // pushing index to array to keep track of what can be pulled/deleted
       eligibleArray.push(index);
       return true;
@@ -43,39 +47,22 @@ export const Domnomnom = (mode) => {
 
     //get the selectedElement from the eligibleArray
     const selectedElement = elements[randomselect];
-    // PROBABLY REDUNDANT
-    //test to verify if element passes selection, may now be redundant with the filter
-    const exemptStatus = selectedElement.getAttribute("title");
-    if (exemptStatus === "exempt") {
-      return false;
-    }
-
-    const typetest = selectedElement.nodeName;
-    switch (typetest) {
-      case "SCRIPT":
-      case "HTML":
-      case "HEAD":
-      case "STYLE":
-      case "TITLE":
-      case "META":
-        return false;
-    }
-    //end of REDUNDANT
 
     if (selectedElement.childElementCount > 0) {
       return false;
     }
-    if (eligibleArray.length <= 0) {
-      console.log("true");
-      return true;
-    }
+
     //remove option from eligibleArray
-    eligibleArray.splice(randomselect, 1);
+    eligibleArray.splice(randomNum, 1);
     //remove selected element
     selectedElement.remove();
 
     console.log(eligibleArray);
     console.log(elements);
+    if (eligibleArray.length <= 1) {
+      console.log("true");
+      return true;
+    }
     if (mode === "clicker") {
       return true;
     } else return false;
