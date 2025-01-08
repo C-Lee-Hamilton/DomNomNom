@@ -1,4 +1,3 @@
-//current issue. when running, the eligibleArray stalls out at the same exact 3 pieces left over, so it never hits 0 again.
 export const Domnomnom = (mode) => {
   const destroy = () => {
     //get list of elements on page
@@ -9,10 +8,10 @@ export const Domnomnom = (mode) => {
     //filter to get an array of indexes that are eligible
     const filters = (element, index) => {
       const testElement = element;
-      const typecount = testElement.nodeName;
+      const typeCheck = testElement.nodeName;
 
       //check by nodeName for common things that shouldn't be deleted
-      switch (typecount) {
+      switch (typeCheck) {
         case "SCRIPT":
         case "HTML":
         case "HEAD":
@@ -57,8 +56,6 @@ export const Domnomnom = (mode) => {
     //remove selected element
     selectedElement.remove();
 
-    console.log(eligibleArray);
-    console.log(elements);
     if (eligibleArray.length <= 1) {
       return true;
     }
@@ -67,15 +64,18 @@ export const Domnomnom = (mode) => {
     } else return false;
   };
 
-  const destroyOne = () => {
-    const intervalId = setInterval(() => {
-      const success = destroy();
-      if (success) {
-        console.log("Targets Destroyed");
-        clearInterval(intervalId);
-      }
-    }, 100);
+  const destroyer = () => {
+    const intervalId = setInterval(
+      () => {
+        const success = destroy();
+        if (success) {
+          console.log("Targets Destroyed");
+          clearInterval(intervalId);
+        }
+      },
+      mode === "clicker" ? 100 : 300
+    );
   };
-  console.log("complete");
-  return destroyOne;
+
+  return destroyer;
 };
