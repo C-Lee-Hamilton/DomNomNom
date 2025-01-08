@@ -60,7 +60,6 @@ export const Domnomnom = (mode) => {
     console.log(eligibleArray);
     console.log(elements);
     if (eligibleArray.length <= 1) {
-      console.log("true");
       return true;
     }
     if (mode === "clicker") {
@@ -72,7 +71,7 @@ export const Domnomnom = (mode) => {
     const intervalId = setInterval(() => {
       const success = destroy();
       if (success) {
-        console.log("success");
+        console.log("Targets Destroyed");
         clearInterval(intervalId);
       }
     }, 100);
