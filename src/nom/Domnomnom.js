@@ -1,17 +1,17 @@
+//current issue. when running, the eligibleArray stalls out at the same exact 3 pieces left over, so it never hits 0 again.
 export const Domnomnom = (mode) => {
   const destroy = () => {
+    //get list of elements on page
     const elementsList = document.querySelectorAll("*");
     const elements = Array.from(elementsList);
-    const randomselect = Math.floor(Math.random() * elements.length);
-    if (!elements[randomselect]) {
-      return false;
-    }
+    const eligibleArray = [];
 
-    //scan for number of exemptions
-    var i = 0;
-    for (let k = 0; k <= elements.length - 1; k++) {
-      const testElement = elements[k];
+    //filter to get an array of indexes that are eligible
+    const filters = (element, index) => {
+      const testElement = element;
       const typecount = testElement.nodeName;
+
+      //check by nodeName for common things that shouldn't be deleted
       switch (typecount) {
         case "SCRIPT":
         case "HTML":
@@ -19,21 +19,32 @@ export const Domnomnom = (mode) => {
         case "STYLE":
         case "TITLE":
         case "META":
-          i++;
+        case "BODY":
+          return false;
       }
+      //check if element has been marked exempt in the App.js
       if (testElement.getAttribute("title") === "exempt") {
-        i++;
+        return false;
       }
-    }
-    //
-    //end if all eligible elements destroyed
-    if (elements.length <= i) {
-      console.log("end of list");
+      // pushing index to array to keep track of what can be pulled/deleted
+      eligibleArray.push(index);
       return true;
-    }
-    //
+    };
+    // run filter
+    elements.filter(filters);
 
+    //get random number based on length of eligibleArray
+    const randomNum = Math.floor(Math.random() * eligibleArray.length);
+    //set random from value of index
+    const randomselect = eligibleArray[randomNum];
+    if (!elements[randomselect]) {
+      return false;
+    }
+
+    //get the selectedElement from the eligibleArray
     const selectedElement = elements[randomselect];
+    // PROBABLY REDUNDANT
+    //test to verify if element passes selection, may now be redundant with the filter
     const exemptStatus = selectedElement.getAttribute("title");
     if (exemptStatus === "exempt") {
       return false;
@@ -49,13 +60,22 @@ export const Domnomnom = (mode) => {
       case "META":
         return false;
     }
+    //end of REDUNDANT
 
     if (selectedElement.childElementCount > 0) {
       return false;
     }
-
+    if (eligibleArray.length <= 0) {
+      console.log("true");
+      return true;
+    }
+    //remove option from eligibleArray
+    eligibleArray.splice(randomselect, 1);
+    //remove selected element
     selectedElement.remove();
 
+    console.log(eligibleArray);
+    console.log(elements);
     if (mode === "clicker") {
       return true;
     } else return false;
@@ -65,11 +85,11 @@ export const Domnomnom = (mode) => {
     const intervalId = setInterval(() => {
       const success = destroy();
       if (success) {
-        clearInterval(intervalId);
         console.log("success");
+        clearInterval(intervalId);
       }
     }, 100);
   };
-
+  console.log("complete");
   return destroyOne;
 };
